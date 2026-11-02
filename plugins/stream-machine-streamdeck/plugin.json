@@ -1,0 +1,35 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "stream-machine-streamdeck",
+  "version": "0.10.1",
+  "description": "Local Stream Deck tools that lay out OBS buttons on a USB deck.",
+  "author": {
+    "name": "prime-optimal"
+  },
+  "repository": "https://github.com/prime-optimal/stream-machine-plugin",
+  "keywords": [
+    "stream deck",
+    "obs",
+    "streaming"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Stream Machine Stream Deck",
+        "shortDescription": "Stream Deck layouts for OBS",
+        "longDescription": "Runs a local stdio server that drives the original 15-key Stream Deck over USB. It previews and applies a layout of OBS scene, audio, record, and stream buttons. Requires Bun, and the Elgato Stream Deck app must be closed. Desktop only.",
+        "capabilities": [
+          "Interactive"
+        ],
+        "defaultPrompt": [
+          "Preview a Stream Deck layout from my OBS scenes."
+        ],
+        "developerName": "prime-optimal",
+        "websiteURL": "https://github.com/prime-optimal/stream-machine-plugin",
+        "privacyPolicyURL": "https://stream-machine-oauth-test.tinycocoa22.chatgpt.site/",
+        "termsOfServiceURL": "https://github.com/prime-optimal",
+        "category": "Productivity"
+      }
+    }
+  }
+}

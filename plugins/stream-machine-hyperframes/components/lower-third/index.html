@@ -1,0 +1,101 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[
+    {"id":"name","type":"string","label":"Name","description":"Main line","role":"content","default":"Your Name","maxLength":32},
+    {"id":"title","type":"string","label":"Subtitle","description":"Smaller line under the name","role":"content","default":"Streaming live on Twitch","maxLength":48},
+    {"id":"accent","type":"color","label":"Accent","description":"Accent bar and subtitle colour","role":"style","default":"#9146ff"},
+    {"id":"panel","type":"color","label":"Panel","description":"Card background","role":"style","default":"#14141ccc"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: transparent;
+      }
+      body {
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      }
+      #lower-third {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+      }
+      #card {
+        position: absolute;
+        left: 96px;
+        bottom: 96px;
+        display: flex;
+        background: var(--panel, #14141ccc);
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      }
+      #bar {
+        width: 10px;
+        background: var(--accent, #9146ff);
+        transform-origin: top;
+      }
+      #text {
+        padding: 22px 36px 24px 28px;
+        min-width: 360px;
+      }
+      #name {
+        font-size: 56px;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        color: #ffffff;
+      }
+      #title {
+        margin-top: 8px;
+        font-size: 30px;
+        font-weight: 500;
+        line-height: 1.2;
+        color: var(--accent, #9146ff);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="lower-third"
+      data-composition-id="lower-third"
+      data-width="1920"
+      data-height="1080"
+      data-start="0"
+      data-duration="6"
+    >
+      <div id="card">
+        <div id="bar"></div>
+        <div id="text">
+          <div id="name" data-var-text="name">Your Name</div>
+          <div id="title" data-var-text="title">Streaming live on Twitch</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var tl = gsap.timeline({ paused: true });
+        tl.fromTo("#card", { x: -520, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.6, ease: "expo.out" }, 0.1);
+        tl.fromTo("#bar", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "power3.out" }, 0.15);
+        tl.fromTo("#name", { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.4, ease: "power4.out" }, 0.3);
+        tl.fromTo("#title", { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.4, ease: "power4.out" }, 0.42);
+        tl.to("#title", { y: -10, autoAlpha: 0, duration: 0.25, ease: "power2.in" }, 5.1);
+        tl.to("#name", { y: -10, autoAlpha: 0, duration: 0.25, ease: "power2.in" }, 5.18);
+        tl.to("#card", { x: -520, autoAlpha: 0, duration: 0.55, ease: "expo.in" }, 5.4);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["lower-third"] = tl;
+      })();
+    </script>
+  </body>
+</html>

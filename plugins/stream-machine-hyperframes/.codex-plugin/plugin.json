@@ -1,0 +1,37 @@
+{
+  "name": "stream-machine-hyperframes",
+  "version": "0.10.1",
+  "description": "Author animated stream overlays as HTML and show them in OBS.",
+  "author": {
+    "name": "prime-optimal"
+  },
+  "repository": "https://github.com/prime-optimal/stream-machine-plugin",
+  "keywords": [
+    "hyperframes",
+    "overlay",
+    "obs",
+    "streaming"
+  ],
+  "interface": {
+    "displayName": "Stream Machine HyperFrames",
+    "shortDescription": "Animated OBS overlays",
+    "longDescription": "Teaches the agent to write an animated overlay as one HTML composition, build it into a single self-contained file with a bundled script, and load it in OBS as a browser source through the Stream Machine OBS plugin. Includes a lower-third template. Needs Node.js 20+ or Bun; no server runs.",
+    "capabilities": [
+      "Interactive"
+    ],
+    "defaultPrompt": [
+      "Make me a lower third overlay and show it in OBS."
+    ],
+    "developerName": "prime-optimal",
+    "websiteURL": "https://github.com/prime-optimal/stream-machine-plugin",
+    "privacyPolicyURL": "https://stream-machine-oauth-test.tinycocoa22.chatgpt.site/",
+    "termsOfServiceURL": "https://github.com/prime-optimal",
+    "category": "Productivity"
+  },
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/overlay-authoring/SKILL.md"
+    }
+  },
+  "skills": "./skills"
+}

@@ -1,0 +1,56 @@
+{
+  "name": "stream-machine",
+  "interface": {
+    "displayName": "Stream Machine"
+  },
+  "plugins": [
+    {
+      "name": "stream-machine",
+      "source": {
+        "source": "local",
+        "path": "./plugins/stream-machine"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "stream-machine-obs",
+      "source": {
+        "source": "local",
+        "path": "./plugins/stream-machine-obs"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "stream-machine-streamdeck",
+      "source": {
+        "source": "local",
+        "path": "./plugins/stream-machine-streamdeck"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "stream-machine-hyperframes",
+      "source": {
+        "source": "local",
+        "path": "./plugins/stream-machine-hyperframes"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

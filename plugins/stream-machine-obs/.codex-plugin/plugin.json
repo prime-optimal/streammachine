@@ -1,0 +1,34 @@
+{
+  "name": "stream-machine-obs",
+  "version": "0.10.1",
+  "description": "Local OBS WebSocket tools for scenes, alerts, and browser sources.",
+  "author": {
+    "name": "prime-optimal"
+  },
+  "repository": "https://github.com/prime-optimal/stream-machine-plugin",
+  "keywords": [
+    "obs",
+    "streaming",
+    "scenes"
+  ],
+  "interface": {
+    "displayName": "Stream Machine OBS",
+    "shortDescription": "OBS scenes and alerts",
+    "longDescription": "Runs a local stdio server that talks to OBS WebSocket on this computer. It inspects scenes, shows a Stream Machine alert, and creates or removes scenes and browser sources. Requires Bun and OBS with WebSocket enabled. Desktop only.",
+    "capabilities": [
+      "Interactive"
+    ],
+    "defaultPrompt": [
+      "Check OBS and list my scenes."
+    ],
+    "developerName": "prime-optimal",
+    "websiteURL": "https://github.com/prime-optimal/stream-machine-plugin",
+    "privacyPolicyURL": "https://stream-machine-oauth-test.tinycocoa22.chatgpt.site/",
+    "termsOfServiceURL": "https://github.com/prime-optimal",
+    "category": "Productivity"
+  },
+  "extensions": {
+    "com.openai": {}
+  },
+  "mcpServers": "./.mcp.json"
+}

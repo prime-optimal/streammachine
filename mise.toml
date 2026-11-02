@@ -1,0 +1,11 @@
+[tools]
+bun = "1.4.4"
+
+[tasks.sync]
+description = "Regenerate plugins/ and the marketplace from a packaged stream-machine-plugin checkout"
+usage = 'arg "<package>" help="Path to <stream-machine-plugin>/artifacts/package/stream-machine after mise run package"'
+run = 'bun scripts/sync.ts {{usage.package}}'
+
+[tasks."build:hyperframes"]
+description = "Bundle the HyperFrames build script (plus its subset-font wasm) into plugins/stream-machine-hyperframes/dist"
+run = 'bun install --frozen-lockfile && rm -rf plugins/stream-machine-hyperframes/dist && bun build --target node --entry-naming "[name].mjs" src/hyperframes/build-overlay.mjs --outdir plugins/stream-machine-hyperframes/dist'

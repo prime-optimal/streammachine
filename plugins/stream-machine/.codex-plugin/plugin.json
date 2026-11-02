@@ -1,0 +1,37 @@
+{
+  "name": "stream-machine",
+  "version": "0.10.1",
+  "description": "Hosted Twitch tools, clips, and the Stream Machine menu.",
+  "author": {
+    "name": "prime-optimal"
+  },
+  "repository": "https://github.com/prime-optimal/stream-machine-plugin",
+  "keywords": [
+    "twitch",
+    "streaming",
+    "clips"
+  ],
+  "interface": {
+    "displayName": "Stream Machine",
+    "shortDescription": "Twitch, clips, and the menu",
+    "longDescription": "Connects the hosted stream-machine server on ChatGPT Sites. It connects your Twitch channel, reads channel and clip data, previews title changes for your approval, and opens the Stream Machine menu. Nothing runs on your computer.",
+    "capabilities": [
+      "Interactive"
+    ],
+    "defaultPrompt": [
+      "Connect Twitch through Stream Machine and show my channel."
+    ],
+    "developerName": "prime-optimal",
+    "websiteURL": "https://github.com/prime-optimal/stream-machine-plugin",
+    "privacyPolicyURL": "https://stream-machine-oauth-test.tinycocoa22.chatgpt.site/",
+    "termsOfServiceURL": "https://github.com/prime-optimal",
+    "category": "Productivity"
+  },
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/onboarding/SKILL.md"
+    }
+  },
+  "skills": "./skills",
+  "mcpServers": "./.mcp.json"
+}

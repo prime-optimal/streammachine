@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "stream-machine-obs": {
+      "type": "stdio",
+      "command": "bun",
+      "args": [
+        "${PLUGIN_ROOT}/dist/obs-server.js"
+      ],
+      "cwd": "${PLUGIN_ROOT}"
+    }
+  }
+}

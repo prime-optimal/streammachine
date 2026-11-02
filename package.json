@@ -1,0 +1,8 @@
+{
+  "name": "streammachine-marketplace",
+  "private": true,
+  "description": "Build tooling for the Stream Machine marketplace. The plugins are plain folders; this only bundles the HyperFrames build script.",
+  "devDependencies": {
+    "subset-font": "2.9.0"
+  }
+}
