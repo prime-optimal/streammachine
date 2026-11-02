@@ -103,15 +103,17 @@ for (const plugin of plugins) {
   if (plugin.dist.length) await cp(join(source, "THIRD_PARTY_NOTICES.txt"), join(dir, "THIRD_PARTY_NOTICES.txt"));
 }
 
+const external = [
+  { name: "hyperframes", source: { source: "url", url: "https://github.com/heygen-com/hyperframes.git", ref: "v0.9.6" }, category: "Creativity" },
+];
+const policy = { installation: "AVAILABLE", authentication: "ON_INSTALL" };
 await mkdir(join(root, ".agents/plugins"), { recursive: true });
 await write(join(root, ".agents/plugins/marketplace.json"), {
   name: "stream-machine",
   interface: { displayName: "Stream Machine" },
-  plugins: plugins.map((plugin) => ({
-    name: plugin.name,
-    source: { source: "local", path: `./plugins/${plugin.name}` },
-    policy: { installation: "AVAILABLE", authentication: "ON_INSTALL" },
-    category: plugin.category,
-  })),
+  plugins: [
+    ...plugins.map((plugin) => ({ name: plugin.name, source: { source: "local", path: `./plugins/${plugin.name}` }, policy, category: plugin.category })),
+    ...external.map((plugin) => ({ ...plugin, policy })),
+  ],
 });
 console.log(`Synced ${plugins.length} plugins from stream-machine ${manifest.version}.`);
