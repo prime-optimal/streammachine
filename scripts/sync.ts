@@ -2,7 +2,7 @@ import { cp, mkdir, rm } from "node:fs/promises";
 import { join, resolve } from "node:path";
 
 type Interface = { displayName: string; shortDescription: string; longDescription: string; capabilities: string[]; defaultPrompt: string[] };
-type PluginSpec = { name: string; description: string; keywords: string[]; servers: string[]; skills: string[]; onboardingSkill?: string; dist: string[]; category: string; interface: Interface };
+type PluginSpec = { name: string; description: string; keywords: string[]; servers: string[]; skills: string[]; onboardingSkill?: string; dist: string[]; category: string; interface: Interface; own?: true };
 
 const root = resolve(import.meta.dir, "..");
 const source = resolve(process.argv[2] ?? "");
@@ -62,10 +62,30 @@ const plugins: PluginSpec[] = [
       defaultPrompt: ["Preview a Stream Deck layout from my OBS scenes."],
     },
   },
+  {
+    // Authored in this repository (plugins/stream-machine-hyperframes/skills, components, live, and dist from `mise run build:hyperframes`).
+    // The sync writes only its manifests and never deletes the folder.
+    name: "stream-machine-hyperframes",
+    description: "Author animated stream overlays as HTML and show them in OBS.",
+    keywords: ["hyperframes", "overlay", "obs", "streaming"],
+    servers: [],
+    skills: ["overlay-authoring"],
+    onboardingSkill: "overlay-authoring",
+    own: true,
+    dist: [],
+    category: "Productivity",
+    interface: {
+      displayName: "Stream Machine HyperFrames",
+      shortDescription: "Animated OBS overlays",
+      longDescription: "Teaches the agent to write an animated overlay as one HTML composition, build it into a single self-contained file with a bundled script, and load it in OBS as a browser source through the Stream Machine OBS plugin. Includes a lower-third template. Needs Node.js 20+ or Bun; no server runs.",
+      capabilities: ["Interactive"],
+      defaultPrompt: ["Make me a lower third overlay and show it in OBS."],
+    },
+  },
 ];
 
 const write = (path: string, value: unknown) => Bun.write(path, `${JSON.stringify(value, null, 2)}\n`);
-await rm(join(root, "plugins"), { recursive: true, force: true });
+for (const plugin of plugins) if (!plugin.own) await rm(join(root, "plugins", plugin.name), { recursive: true, force: true });
 for (const plugin of plugins) {
   const dir = join(root, "plugins", plugin.name);
   if (plugin.interface.shortDescription.length > 30) throw new Error(`shortDescription too long: ${plugin.name}`);
@@ -89,31 +109,26 @@ for (const plugin of plugins) {
     ...identity,
     extensions: { "com.openai": { ...onboarding, interface: openaiInterface } },
   });
-  await write(join(dir, "mcp.json"), { $schema: "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json", mcpServers });
+  if (!plugin.own) await write(join(dir, "mcp.json"), { $schema: "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json", mcpServers });
   await write(join(dir, ".codex-plugin/plugin.json"), {
     ...identity,
     interface: openaiInterface,
     extensions: { "com.openai": onboarding },
     ...(plugin.skills.length ? { skills: "./skills" } : {}),
-    mcpServers: "./.mcp.json",
+    ...(plugin.own ? {} : { mcpServers: "./.mcp.json" }),
   });
+  if (plugin.own) continue;
   await write(join(dir, ".mcp.json"), { mcpServers });
   for (const skill of plugin.skills) await cp(join(source, "skills", skill), join(dir, "skills", skill), { recursive: true });
   for (const file of plugin.dist) await cp(join(source, "dist", file), join(dir, "dist", file));
   if (plugin.dist.length) await cp(join(source, "THIRD_PARTY_NOTICES.txt"), join(dir, "THIRD_PARTY_NOTICES.txt"));
 }
 
-const external = [
-  { name: "hyperframes", source: { source: "url", url: "https://github.com/heygen-com/hyperframes.git", ref: "v0.9.6" }, category: "Creativity" },
-];
 const policy = { installation: "AVAILABLE", authentication: "ON_INSTALL" };
 await mkdir(join(root, ".agents/plugins"), { recursive: true });
 await write(join(root, ".agents/plugins/marketplace.json"), {
   name: "stream-machine",
   interface: { displayName: "Stream Machine" },
-  plugins: [
-    ...plugins.map((plugin) => ({ name: plugin.name, source: { source: "local", path: `./plugins/${plugin.name}` }, policy, category: plugin.category })),
-    ...external.map((plugin) => ({ ...plugin, policy })),
-  ],
+  plugins: plugins.map((plugin) => ({ name: plugin.name, source: { source: "local", path: `./plugins/${plugin.name}` }, policy, category: plugin.category })),
 });
 console.log(`Synced ${plugins.length} plugins from stream-machine ${manifest.version}.`);
