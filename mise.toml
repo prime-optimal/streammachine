@@ -1,0 +1,7 @@
+[tools]
+bun = "1.4.4"
+
+[tasks.sync]
+description = "Regenerate plugins/ and the marketplace from a packaged stream-machine-plugin checkout"
+usage = 'arg "<package>" help="Path to <stream-machine-plugin>/artifacts/package/stream-machine after mise run package"'
+run = 'bun scripts/sync.ts {{usage.package}}'
